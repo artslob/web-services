@@ -10,6 +10,7 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>example</module>
+        <module>lab1</module>
     </modules>
 
     <properties>
