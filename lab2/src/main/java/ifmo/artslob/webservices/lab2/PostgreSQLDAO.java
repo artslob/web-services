@@ -1,6 +1,7 @@
 package ifmo.artslob.webservices.lab2;
 
 import com.healthmarketscience.sqlbuilder.BinaryCondition;
+import com.healthmarketscience.sqlbuilder.InsertQuery;
 import com.healthmarketscience.sqlbuilder.SelectQuery;
 import com.healthmarketscience.sqlbuilder.dbspec.basic.DbColumn;
 import com.healthmarketscience.sqlbuilder.dbspec.basic.DbSpec;
@@ -13,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class PostgreSQLDAO {
+    private DbTable table;
     private DbColumn id_column;
     private DbColumn name_column;
     private DbColumn country_column;
@@ -21,7 +23,7 @@ public class PostgreSQLDAO {
     private DbColumn area_column;
 
     PostgreSQLDAO() {
-        DbTable table = new DbSpec().addDefaultSchema().addTable("\"ifmo-ws.cities\"");
+        this.table = new DbSpec().addDefaultSchema().addTable("\"ifmo-ws.cities\"");
         this.id_column = table.addColumn("id", Types.INTEGER, null);
         this.name_column = table.addColumn("name", Types.VARCHAR, 200);
         this.country_column = table.addColumn("country", Types.VARCHAR, 200);
@@ -37,8 +39,19 @@ public class PostgreSQLDAO {
             String population,
             String area
     ) {
-        // TODO
-        return 0;
+        try (Connection connection = ConnectionUtil.getConnection()) {
+            Statement stmt = connection.createStatement();
+            String query = createInsertQuery(name, country, founded, population, area);
+            logSqlQuery(query);
+            stmt.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
+            ResultSet rs = stmt.getGeneratedKeys();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PostgreSQLDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return -1;
     }
 
     List<City> getCities(
@@ -50,10 +63,9 @@ public class PostgreSQLDAO {
     ) {
         List<City> cities = new ArrayList<>();
         try (Connection connection = ConnectionUtil.getConnection()) {
-            Statement stmt = connection.createStatement();
             String query = createSelectQuery(name, country, founded, population, area);
             logSqlQuery(query);
-            ResultSet rs = stmt.executeQuery(query);
+            ResultSet rs = connection.createStatement().executeQuery(query);
             while (rs.next()) {
                 City city = new City(
                         rs.getString("name"),
@@ -85,6 +97,23 @@ public class PostgreSQLDAO {
     boolean deleteCity(String id) {
         // TODO
         return true;
+    }
+
+    private String createInsertQuery(
+            String name,
+            String country,
+            String founded,
+            String population,
+            String area
+    ) {
+        return new InsertQuery(table)
+                .addColumn(name_column, name)
+                .addColumn(country_column, country)
+                .addColumn(founded_column, founded)
+                .addColumn(population_column, population)
+                .addColumn(area_column, area)
+                .validate()
+                .toString();
     }
 
     private String createSelectQuery(

@@ -22,7 +22,8 @@ public class WebServiceClient {
 
         switch (method) {
             case createMethodName: {
-                cityWebService.createCity("", "", "", "", "");
+                int new_id = cityWebService.createCity("", "", "", "", "");
+                System.out.println("Created new city with id: " + new_id);
                 break;
             }
             case readMethodName: {
