@@ -10,23 +10,58 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class PostgreSQLDAO {
-    public List<City> getCities() {
+    public int createCity(
+            String name,
+            String country,
+            String founded,
+            String population,
+            String area
+    ) {
+        // TODO
+        return 0;
+    }
+
+    public List<City> getCities(
+            String name,
+            String country,
+            String founded,
+            String population,
+            String area
+    ) {
         List<City> cities = new ArrayList<>();
         try (Connection connection = ConnectionUtil.getConnection()) {
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery("select * from \"ifmo-ws.cities\";");
             while (rs.next()) {
-                String name = rs.getString("name");
-                String country = rs.getString("country");
-                int founded = rs.getInt("founded");
-                int population = rs.getInt("population");
-                int area = rs.getInt("area");
-                City city = new City(name, country, founded, population, area);
+                City city = new City(
+                        rs.getString("name"),
+                        rs.getString("country"),
+                        rs.getInt("founded"),
+                        rs.getInt("population"),
+                        rs.getInt("area")
+                );
                 cities.add(city);
             }
         } catch (SQLException ex) {
             Logger.getLogger(PostgreSQLDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return cities;
+    }
+
+    public boolean updateCity(
+            String id,
+            String name,
+            String country,
+            String founded,
+            String population,
+            String area
+    ) {
+        // TODO
+        return true;
+    }
+
+    public boolean deleteCity(String id) {
+        // TODO
+        return true;
     }
 }
