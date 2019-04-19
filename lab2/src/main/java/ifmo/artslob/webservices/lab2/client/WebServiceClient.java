@@ -11,7 +11,7 @@ public class WebServiceClient {
     public static void main(String[] args) throws MalformedURLException {
         URL url = new URL("http://localhost:8080/CityService?wsdl");
         CityService cityService = new CityService(url);
-        List<City> cities = cityService.getCityWebServicePort().getCities();
+        List<City> cities = cityService.getCityWebServicePort().getCities("", "", "", "", "");
         for (City city : cities) {
             System.out.println("City{" +
                     "name='" + city.getName() + '\'' +
@@ -23,5 +23,4 @@ public class WebServiceClient {
         }
         System.out.println("Total cities: " + cities.size());
     }
-
 }

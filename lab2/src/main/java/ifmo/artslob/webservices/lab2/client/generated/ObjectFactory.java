@@ -24,6 +24,12 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
+    private final static QName _CreateCityResponse_QNAME = new QName("http://lab2.webservices.artslob.ifmo/", "createCityResponse");
+    private final static QName _UpdateCity_QNAME = new QName("http://lab2.webservices.artslob.ifmo/", "updateCity");
+    private final static QName _CreateCity_QNAME = new QName("http://lab2.webservices.artslob.ifmo/", "createCity");
+    private final static QName _DeleteCity_QNAME = new QName("http://lab2.webservices.artslob.ifmo/", "deleteCity");
+    private final static QName _UpdateCityResponse_QNAME = new QName("http://lab2.webservices.artslob.ifmo/", "updateCityResponse");
+    private final static QName _DeleteCityResponse_QNAME = new QName("http://lab2.webservices.artslob.ifmo/", "deleteCityResponse");
     private final static QName _GetCitiesResponse_QNAME = new QName("http://lab2.webservices.artslob.ifmo/", "getCitiesResponse");
     private final static QName _GetCities_QNAME = new QName("http://lab2.webservices.artslob.ifmo/", "getCities");
 
@@ -35,11 +41,59 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link UpdateCity }
+     * 
+     */
+    public UpdateCity createUpdateCity() {
+        return new UpdateCity();
+    }
+
+    /**
+     * Create an instance of {@link CreateCity }
+     * 
+     */
+    public CreateCity createCreateCity() {
+        return new CreateCity();
+    }
+
+    /**
+     * Create an instance of {@link DeleteCity }
+     * 
+     */
+    public DeleteCity createDeleteCity() {
+        return new DeleteCity();
+    }
+
+    /**
+     * Create an instance of {@link CreateCityResponse }
+     * 
+     */
+    public CreateCityResponse createCreateCityResponse() {
+        return new CreateCityResponse();
+    }
+
+    /**
      * Create an instance of {@link GetCities }
      * 
      */
     public GetCities createGetCities() {
         return new GetCities();
+    }
+
+    /**
+     * Create an instance of {@link UpdateCityResponse }
+     * 
+     */
+    public UpdateCityResponse createUpdateCityResponse() {
+        return new UpdateCityResponse();
+    }
+
+    /**
+     * Create an instance of {@link DeleteCityResponse }
+     * 
+     */
+    public DeleteCityResponse createDeleteCityResponse() {
+        return new DeleteCityResponse();
     }
 
     /**
@@ -56,6 +110,60 @@ public class ObjectFactory {
      */
     public City createCity() {
         return new City();
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link CreateCityResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://lab2.webservices.artslob.ifmo/", name = "createCityResponse")
+    public JAXBElement<CreateCityResponse> createCreateCityResponse(CreateCityResponse value) {
+        return new JAXBElement<CreateCityResponse>(_CreateCityResponse_QNAME, CreateCityResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link UpdateCity }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://lab2.webservices.artslob.ifmo/", name = "updateCity")
+    public JAXBElement<UpdateCity> createUpdateCity(UpdateCity value) {
+        return new JAXBElement<UpdateCity>(_UpdateCity_QNAME, UpdateCity.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link CreateCity }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://lab2.webservices.artslob.ifmo/", name = "createCity")
+    public JAXBElement<CreateCity> createCreateCity(CreateCity value) {
+        return new JAXBElement<CreateCity>(_CreateCity_QNAME, CreateCity.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link DeleteCity }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://lab2.webservices.artslob.ifmo/", name = "deleteCity")
+    public JAXBElement<DeleteCity> createDeleteCity(DeleteCity value) {
+        return new JAXBElement<DeleteCity>(_DeleteCity_QNAME, DeleteCity.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link UpdateCityResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://lab2.webservices.artslob.ifmo/", name = "updateCityResponse")
+    public JAXBElement<UpdateCityResponse> createUpdateCityResponse(UpdateCityResponse value) {
+        return new JAXBElement<UpdateCityResponse>(_UpdateCityResponse_QNAME, UpdateCityResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link DeleteCityResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://lab2.webservices.artslob.ifmo/", name = "deleteCityResponse")
+    public JAXBElement<DeleteCityResponse> createDeleteCityResponse(DeleteCityResponse value) {
+        return new JAXBElement<DeleteCityResponse>(_DeleteCityResponse_QNAME, DeleteCityResponse.class, null, value);
     }
 
     /**

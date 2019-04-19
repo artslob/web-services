@@ -3,6 +3,7 @@ package ifmo.artslob.webservices.lab2.client.generated;
 
 import java.util.List;
 import javax.jws.WebMethod;
+import javax.jws.WebParam;
 import javax.jws.WebResult;
 import javax.jws.WebService;
 import javax.xml.bind.annotation.XmlSeeAlso;
@@ -26,6 +27,38 @@ public interface CityWebService {
 
     /**
      * 
+     * @param area
+     * @param country
+     * @param name
+     * @param founded
+     * @param population
+     * @return
+     *     returns int
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "createCity", targetNamespace = "http://lab2.webservices.artslob.ifmo/", className = "ifmo.artslob.webservices.lab2.client.generated.CreateCity")
+    @ResponseWrapper(localName = "createCityResponse", targetNamespace = "http://lab2.webservices.artslob.ifmo/", className = "ifmo.artslob.webservices.lab2.client.generated.CreateCityResponse")
+    @Action(input = "http://lab2.webservices.artslob.ifmo/CityWebService/createCityRequest", output = "http://lab2.webservices.artslob.ifmo/CityWebService/createCityResponse")
+    public int createCity(
+        @WebParam(name = "name", targetNamespace = "")
+        String name,
+        @WebParam(name = "country", targetNamespace = "")
+        String country,
+        @WebParam(name = "founded", targetNamespace = "")
+        String founded,
+        @WebParam(name = "population", targetNamespace = "")
+        String population,
+        @WebParam(name = "area", targetNamespace = "")
+        String area);
+
+    /**
+     * 
+     * @param area
+     * @param country
+     * @param name
+     * @param founded
+     * @param population
      * @return
      *     returns java.util.List<ifmo.artslob.webservices.lab2.client.generated.City>
      */
@@ -34,6 +67,61 @@ public interface CityWebService {
     @RequestWrapper(localName = "getCities", targetNamespace = "http://lab2.webservices.artslob.ifmo/", className = "ifmo.artslob.webservices.lab2.client.generated.GetCities")
     @ResponseWrapper(localName = "getCitiesResponse", targetNamespace = "http://lab2.webservices.artslob.ifmo/", className = "ifmo.artslob.webservices.lab2.client.generated.GetCitiesResponse")
     @Action(input = "http://lab2.webservices.artslob.ifmo/CityWebService/getCitiesRequest", output = "http://lab2.webservices.artslob.ifmo/CityWebService/getCitiesResponse")
-    public List<City> getCities();
+    public List<City> getCities(
+        @WebParam(name = "name", targetNamespace = "")
+        String name,
+        @WebParam(name = "country", targetNamespace = "")
+        String country,
+        @WebParam(name = "founded", targetNamespace = "")
+        String founded,
+        @WebParam(name = "population", targetNamespace = "")
+        String population,
+        @WebParam(name = "area", targetNamespace = "")
+        String area);
+
+    /**
+     * 
+     * @param area
+     * @param country
+     * @param name
+     * @param founded
+     * @param id
+     * @param population
+     * @return
+     *     returns boolean
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "updateCity", targetNamespace = "http://lab2.webservices.artslob.ifmo/", className = "ifmo.artslob.webservices.lab2.client.generated.UpdateCity")
+    @ResponseWrapper(localName = "updateCityResponse", targetNamespace = "http://lab2.webservices.artslob.ifmo/", className = "ifmo.artslob.webservices.lab2.client.generated.UpdateCityResponse")
+    @Action(input = "http://lab2.webservices.artslob.ifmo/CityWebService/updateCityRequest", output = "http://lab2.webservices.artslob.ifmo/CityWebService/updateCityResponse")
+    public boolean updateCity(
+        @WebParam(name = "id", targetNamespace = "")
+        String id,
+        @WebParam(name = "name", targetNamespace = "")
+        String name,
+        @WebParam(name = "country", targetNamespace = "")
+        String country,
+        @WebParam(name = "founded", targetNamespace = "")
+        String founded,
+        @WebParam(name = "population", targetNamespace = "")
+        String population,
+        @WebParam(name = "area", targetNamespace = "")
+        String area);
+
+    /**
+     * 
+     * @param id
+     * @return
+     *     returns boolean
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "deleteCity", targetNamespace = "http://lab2.webservices.artslob.ifmo/", className = "ifmo.artslob.webservices.lab2.client.generated.DeleteCity")
+    @ResponseWrapper(localName = "deleteCityResponse", targetNamespace = "http://lab2.webservices.artslob.ifmo/", className = "ifmo.artslob.webservices.lab2.client.generated.DeleteCityResponse")
+    @Action(input = "http://lab2.webservices.artslob.ifmo/CityWebService/deleteCityRequest", output = "http://lab2.webservices.artslob.ifmo/CityWebService/deleteCityResponse")
+    public boolean deleteCity(
+        @WebParam(name = "id", targetNamespace = "")
+        String id);
 
 }

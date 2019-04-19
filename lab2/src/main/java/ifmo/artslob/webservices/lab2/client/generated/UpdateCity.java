@@ -7,15 +7,16 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for getCities complex type.
+ * <p>Java class for updateCity complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="getCities">
+ * &lt;complexType name="updateCity">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
+ *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="name" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="country" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="founded" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
@@ -30,20 +31,46 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "getCities", propOrder = {
+@XmlType(name = "updateCity", propOrder = {
+    "id",
     "name",
     "country",
     "founded",
     "population",
     "area"
 })
-public class GetCities {
+public class UpdateCity {
 
+    protected String id;
     protected String name;
     protected String country;
     protected String founded;
     protected String population;
     protected String area;
+
+    /**
+     * Gets the value of the id property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getId() {
+        return id;
+    }
+
+    /**
+     * Sets the value of the id property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setId(String value) {
+        this.id = value;
+    }
 
     /**
      * Gets the value of the name property.

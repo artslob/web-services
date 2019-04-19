@@ -7,12 +7,12 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for getCities complex type.
+ * <p>Java class for createCity complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="getCities">
+ * &lt;complexType name="createCity">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
@@ -30,14 +30,14 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "getCities", propOrder = {
+@XmlType(name = "createCity", propOrder = {
     "name",
     "country",
     "founded",
     "population",
     "area"
 })
-public class GetCities {
+public class CreateCity {
 
     protected String name;
     protected String country;

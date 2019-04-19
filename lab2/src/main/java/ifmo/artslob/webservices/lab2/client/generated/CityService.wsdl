@@ -4,21 +4,78 @@
 <xsd:import namespace="http://lab2.webservices.artslob.ifmo/" schemaLocation="http://0.0.0.0:8080/CityService?xsd=1"></xsd:import>
 </xsd:schema>
 </types>
+<message name="createCity">
+<part name="parameters" element="tns:createCity"></part>
+</message>
+<message name="createCityResponse">
+<part name="parameters" element="tns:createCityResponse"></part>
+</message>
 <message name="getCities">
 <part name="parameters" element="tns:getCities"></part>
 </message>
 <message name="getCitiesResponse">
 <part name="parameters" element="tns:getCitiesResponse"></part>
 </message>
+<message name="updateCity">
+<part name="parameters" element="tns:updateCity"></part>
+</message>
+<message name="updateCityResponse">
+<part name="parameters" element="tns:updateCityResponse"></part>
+</message>
+<message name="deleteCity">
+<part name="parameters" element="tns:deleteCity"></part>
+</message>
+<message name="deleteCityResponse">
+<part name="parameters" element="tns:deleteCityResponse"></part>
+</message>
 <portType name="CityWebService">
+<operation name="createCity">
+<input wsam:Action="http://lab2.webservices.artslob.ifmo/CityWebService/createCityRequest" message="tns:createCity"></input>
+<output wsam:Action="http://lab2.webservices.artslob.ifmo/CityWebService/createCityResponse" message="tns:createCityResponse"></output>
+</operation>
 <operation name="getCities">
 <input wsam:Action="http://lab2.webservices.artslob.ifmo/CityWebService/getCitiesRequest" message="tns:getCities"></input>
 <output wsam:Action="http://lab2.webservices.artslob.ifmo/CityWebService/getCitiesResponse" message="tns:getCitiesResponse"></output>
 </operation>
+<operation name="updateCity">
+<input wsam:Action="http://lab2.webservices.artslob.ifmo/CityWebService/updateCityRequest" message="tns:updateCity"></input>
+<output wsam:Action="http://lab2.webservices.artslob.ifmo/CityWebService/updateCityResponse" message="tns:updateCityResponse"></output>
+</operation>
+<operation name="deleteCity">
+<input wsam:Action="http://lab2.webservices.artslob.ifmo/CityWebService/deleteCityRequest" message="tns:deleteCity"></input>
+<output wsam:Action="http://lab2.webservices.artslob.ifmo/CityWebService/deleteCityResponse" message="tns:deleteCityResponse"></output>
+</operation>
 </portType>
 <binding name="CityWebServicePortBinding" type="tns:CityWebService">
 <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"></soap:binding>
+<operation name="createCity">
+<soap:operation soapAction=""></soap:operation>
+<input>
+<soap:body use="literal"></soap:body>
+</input>
+<output>
+<soap:body use="literal"></soap:body>
+</output>
+</operation>
 <operation name="getCities">
+<soap:operation soapAction=""></soap:operation>
+<input>
+<soap:body use="literal"></soap:body>
+</input>
+<output>
+<soap:body use="literal"></soap:body>
+</output>
+</operation>
+<operation name="updateCity">
+<soap:operation soapAction=""></soap:operation>
+<input>
+<soap:body use="literal"></soap:body>
+</input>
+<output>
+<soap:body use="literal"></soap:body>
+</output>
+</operation>
+<operation name="deleteCity">
 <soap:operation soapAction=""></soap:operation>
 <input>
 <soap:body use="literal"></soap:body>
