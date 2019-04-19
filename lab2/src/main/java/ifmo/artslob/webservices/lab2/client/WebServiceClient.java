@@ -28,13 +28,7 @@ public class WebServiceClient {
             case readMethodName: {
                 List<City> cities = cityWebService.getCities("", "", "", "", "");
                 for (City city : cities) {
-                    System.out.println("City{" +
-                            "name='" + city.getName() + '\'' +
-                            ", country='" + city.getCountry() + '\'' +
-                            ", founded=" + city.getFounded() +
-                            ", population=" + city.getPopulation() +
-                            ", area=" + city.getArea() +
-                            '}');
+                    System.out.println(cityToString(city));
                 }
                 System.out.println("Total cities: " + cities.size());
                 break;
@@ -54,5 +48,10 @@ public class WebServiceClient {
                 break;
             }
         }
+    }
+
+    private static String cityToString(City city) {
+        return String.format("City{name='%s', country='%s', founded=%d, population=%d, area=%d}",
+                city.getName(), city.getCountry(), city.getFounded(), city.getPopulation(), city.getArea());
     }
 }
