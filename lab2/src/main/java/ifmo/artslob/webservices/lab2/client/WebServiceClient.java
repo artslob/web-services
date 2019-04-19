@@ -39,7 +39,8 @@ public class WebServiceClient {
                 break;
             }
             case deleteMethodName: {
-                cityWebService.deleteCity("");
+                boolean success = cityWebService.deleteCity("");
+                System.out.println("Delete operation is successful: " + success);
                 break;
             }
             default: {

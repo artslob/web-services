@@ -1,6 +1,7 @@
 package ifmo.artslob.webservices.lab2;
 
 import com.healthmarketscience.sqlbuilder.BinaryCondition;
+import com.healthmarketscience.sqlbuilder.DeleteQuery;
 import com.healthmarketscience.sqlbuilder.InsertQuery;
 import com.healthmarketscience.sqlbuilder.SelectQuery;
 import com.healthmarketscience.sqlbuilder.dbspec.basic.DbColumn;
@@ -95,8 +96,16 @@ public class PostgreSQLDAO {
     }
 
     boolean deleteCity(String id) {
-        // TODO
-        return true;
+        try (Connection connection = ConnectionUtil.getConnection()) {
+            Statement stmt = connection.createStatement();
+            String query = createDeleteQuery(id);
+            logSqlQuery(query);
+            int rowsNumber = stmt.executeUpdate(query);
+            return rowsNumber > 0;
+        } catch (SQLException ex) {
+            Logger.getLogger(PostgreSQLDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
     }
 
     private String createInsertQuery(
@@ -146,6 +155,13 @@ public class PostgreSQLDAO {
             select = select.addCondition(BinaryCondition.equalTo(area_column, area));
         }
         return select.validate().toString();
+    }
+
+    private String createDeleteQuery(String id) {
+        return new DeleteQuery(table)
+                .addCondition(BinaryCondition.equalTo(id_column, id))
+                .validate()
+                .toString();
     }
 
     private static boolean isInteger(String s) {
