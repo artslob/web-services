@@ -35,7 +35,8 @@ public class WebServiceClient {
                 break;
             }
             case updateMethodName: {
-                cityWebService.updateCity("", "", "", "", "", "");
+                boolean success = cityWebService.updateCity("", "", "", "", "", "");
+                System.out.println("Update operation is successful: " + success);
                 break;
             }
             case deleteMethodName: {

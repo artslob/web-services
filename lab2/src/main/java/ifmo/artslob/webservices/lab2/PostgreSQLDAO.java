@@ -1,9 +1,6 @@
 package ifmo.artslob.webservices.lab2;
 
-import com.healthmarketscience.sqlbuilder.BinaryCondition;
-import com.healthmarketscience.sqlbuilder.DeleteQuery;
-import com.healthmarketscience.sqlbuilder.InsertQuery;
-import com.healthmarketscience.sqlbuilder.SelectQuery;
+import com.healthmarketscience.sqlbuilder.*;
 import com.healthmarketscience.sqlbuilder.dbspec.basic.DbColumn;
 import com.healthmarketscience.sqlbuilder.dbspec.basic.DbSpec;
 import com.healthmarketscience.sqlbuilder.dbspec.basic.DbTable;
@@ -91,8 +88,16 @@ public class PostgreSQLDAO {
             String population,
             String area
     ) {
-        // TODO
-        return true;
+        try (Connection connection = ConnectionUtil.getConnection()) {
+            Statement stmt = connection.createStatement();
+            String query = createUpdateQuery(id, name, country, founded, population, area);
+            logSqlQuery(query);
+            int rowsNumber = stmt.executeUpdate(query);
+            return rowsNumber > 0;
+        } catch (SQLException ex) {
+            Logger.getLogger(PostgreSQLDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
     }
 
     boolean deleteCity(String id) {
@@ -155,6 +160,25 @@ public class PostgreSQLDAO {
             select = select.addCondition(BinaryCondition.equalTo(area_column, area));
         }
         return select.validate().toString();
+    }
+
+    private String createUpdateQuery(
+            String id,
+            String name,
+            String country,
+            String founded,
+            String population,
+            String area
+    ) {
+        return new UpdateQuery(table)
+                .addCondition(BinaryCondition.equalTo(id_column, id))
+                .addSetClause(name_column, name)
+                .addSetClause(country_column, country)
+                .addSetClause(founded_column, founded)
+                .addSetClause(population_column, population)
+                .addSetClause(area_column, area)
+                .validate()
+                .toString();
     }
 
     private String createDeleteQuery(String id) {
