@@ -51,7 +51,9 @@ public class PostgreSQLDAO {
         List<City> cities = new ArrayList<>();
         try (Connection connection = ConnectionUtil.getConnection()) {
             Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery(createSelectQuery(name, country, founded, population, area));
+            String query = createSelectQuery(name, country, founded, population, area);
+            logSqlQuery(query);
+            ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
                 City city = new City(
                         rs.getString("name"),
@@ -114,9 +116,7 @@ public class PostgreSQLDAO {
         if (isInteger(area)) {
             select = select.addCondition(BinaryCondition.equalTo(area_column, area));
         }
-        String query = select.validate().toString();
-        System.err.println(query);
-        return query;
+        return select.validate().toString();
     }
 
     private static boolean isInteger(String s) {
@@ -126,5 +126,9 @@ public class PostgreSQLDAO {
             return false;
         }
         return true;
+    }
+
+    private void logSqlQuery(String query) {
+        System.err.println(query);
     }
 }
