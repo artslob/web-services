@@ -30,7 +30,7 @@ public class PostgreSQLDAO {
         this.area_column = table.addColumn("area", Types.INTEGER, null);
     }
 
-    public int createCity(
+    int createCity(
             String name,
             String country,
             String founded,
@@ -41,7 +41,7 @@ public class PostgreSQLDAO {
         return 0;
     }
 
-    public List<City> getCities(
+    List<City> getCities(
             String name,
             String country,
             String founded,
@@ -70,7 +70,7 @@ public class PostgreSQLDAO {
         return cities;
     }
 
-    public boolean updateCity(
+    boolean updateCity(
             String id,
             String name,
             String country,
@@ -82,7 +82,7 @@ public class PostgreSQLDAO {
         return true;
     }
 
-    public boolean deleteCity(String id) {
+    boolean deleteCity(String id) {
         // TODO
         return true;
     }
