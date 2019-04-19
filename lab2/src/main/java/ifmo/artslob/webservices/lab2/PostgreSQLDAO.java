@@ -1,9 +1,13 @@
 package ifmo.artslob.webservices.lab2;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import com.healthmarketscience.sqlbuilder.BinaryCondition;
+import com.healthmarketscience.sqlbuilder.SelectQuery;
+import com.healthmarketscience.sqlbuilder.dbspec.basic.DbColumn;
+import com.healthmarketscience.sqlbuilder.dbspec.basic.DbSchema;
+import com.healthmarketscience.sqlbuilder.dbspec.basic.DbSpec;
+import com.healthmarketscience.sqlbuilder.dbspec.basic.DbTable;
+
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -31,7 +35,7 @@ public class PostgreSQLDAO {
         List<City> cities = new ArrayList<>();
         try (Connection connection = ConnectionUtil.getConnection()) {
             Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("select * from \"ifmo-ws.cities\";");
+            ResultSet rs = stmt.executeQuery(createSelectQuery(name, country, founded, population, area));
             while (rs.next()) {
                 City city = new City(
                         rs.getString("name"),
@@ -62,6 +66,57 @@ public class PostgreSQLDAO {
 
     public boolean deleteCity(String id) {
         // TODO
+        return true;
+    }
+
+    private String createSelectQuery(
+            String name,
+            String country,
+            String founded,
+            String population,
+            String area
+    ) {
+        DbSchema schema = new DbSpec().addDefaultSchema();
+        DbTable table = schema.addTable("\"ifmo-ws.cities\"");
+        DbColumn id_column = table.addColumn("id", Types.INTEGER, null);
+        DbColumn name_column = table.addColumn("name", Types.VARCHAR, 200);
+        DbColumn country_column = table.addColumn("country", Types.VARCHAR, 200);
+        DbColumn founded_column = table.addColumn("founded", Types.INTEGER, null);
+        DbColumn population_column = table.addColumn("population", Types.INTEGER, null);
+        DbColumn area_column = table.addColumn("area", Types.INTEGER, null);
+        SelectQuery select = new SelectQuery()
+                .addColumns(id_column)
+                .addColumns(name_column)
+                .addColumns(country_column)
+                .addColumns(founded_column)
+                .addColumns(population_column)
+                .addColumns(area_column);
+        if (name != null && !name.isEmpty()) {
+            select = select.addCondition(BinaryCondition.equalTo(name_column, name));
+        }
+        if (country != null && !country.isEmpty()) {
+            select = select.addCondition(BinaryCondition.equalTo(country_column, country));
+        }
+        if (isInteger(founded)) {
+            select = select.addCondition(BinaryCondition.equalTo(founded_column, founded));
+        }
+        if (isInteger(population)) {
+            select = select.addCondition(BinaryCondition.equalTo(population_column, population));
+        }
+        if (isInteger(area)) {
+            select = select.addCondition(BinaryCondition.equalTo(area_column, area));
+        }
+        String query = select.validate().toString();
+        System.err.println(query);
+        return query;
+    }
+
+    private static boolean isInteger(String s) {
+        try {
+            Integer.parseInt(s);
+        } catch (NumberFormatException | NullPointerException e) {
+            return false;
+        }
         return true;
     }
 }
