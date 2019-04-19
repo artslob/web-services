@@ -3,7 +3,6 @@ package ifmo.artslob.webservices.lab2;
 import com.healthmarketscience.sqlbuilder.BinaryCondition;
 import com.healthmarketscience.sqlbuilder.SelectQuery;
 import com.healthmarketscience.sqlbuilder.dbspec.basic.DbColumn;
-import com.healthmarketscience.sqlbuilder.dbspec.basic.DbSchema;
 import com.healthmarketscience.sqlbuilder.dbspec.basic.DbSpec;
 import com.healthmarketscience.sqlbuilder.dbspec.basic.DbTable;
 
@@ -14,6 +13,23 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class PostgreSQLDAO {
+    private DbColumn id_column;
+    private DbColumn name_column;
+    private DbColumn country_column;
+    private DbColumn founded_column;
+    private DbColumn population_column;
+    private DbColumn area_column;
+
+    PostgreSQLDAO() {
+        DbTable table = new DbSpec().addDefaultSchema().addTable("\"ifmo-ws.cities\"");
+        this.id_column = table.addColumn("id", Types.INTEGER, null);
+        this.name_column = table.addColumn("name", Types.VARCHAR, 200);
+        this.country_column = table.addColumn("country", Types.VARCHAR, 200);
+        this.founded_column = table.addColumn("founded", Types.INTEGER, null);
+        this.population_column = table.addColumn("population", Types.INTEGER, null);
+        this.area_column = table.addColumn("area", Types.INTEGER, null);
+    }
+
     public int createCity(
             String name,
             String country,
@@ -76,14 +92,6 @@ public class PostgreSQLDAO {
             String population,
             String area
     ) {
-        DbSchema schema = new DbSpec().addDefaultSchema();
-        DbTable table = schema.addTable("\"ifmo-ws.cities\"");
-        DbColumn id_column = table.addColumn("id", Types.INTEGER, null);
-        DbColumn name_column = table.addColumn("name", Types.VARCHAR, 200);
-        DbColumn country_column = table.addColumn("country", Types.VARCHAR, 200);
-        DbColumn founded_column = table.addColumn("founded", Types.INTEGER, null);
-        DbColumn population_column = table.addColumn("population", Types.INTEGER, null);
-        DbColumn area_column = table.addColumn("area", Types.INTEGER, null);
         SelectQuery select = new SelectQuery()
                 .addColumns(id_column)
                 .addColumns(name_column)
