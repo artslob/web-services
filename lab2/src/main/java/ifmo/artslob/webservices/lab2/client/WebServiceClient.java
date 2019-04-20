@@ -22,12 +22,14 @@ public class WebServiceClient {
 
         switch (method) {
             case createMethodName: {
-                int new_id = cityWebService.createCity("", "", "", "", "");
+                checkParamsLength(args, 6);
+                int new_id = cityWebService.createCity(args[1], args[2], args[3], args[4], args[5]);
                 System.out.println("Created new city with id: " + new_id);
                 break;
             }
             case readMethodName: {
-                List<City> cities = cityWebService.getCities("", "", "", "", "");
+                checkParamsLength(args, 6);
+                List<City> cities = cityWebService.getCities(args[1], args[2], args[3], args[4], args[5]);
                 for (City city : cities) {
                     System.out.println(cityToString(city));
                 }
@@ -35,12 +37,14 @@ public class WebServiceClient {
                 break;
             }
             case updateMethodName: {
-                boolean success = cityWebService.updateCity("", "", "", "", "", "");
+                checkParamsLength(args, 7);
+                boolean success = cityWebService.updateCity(args[1], args[2], args[3], args[4], args[5], args[6]);
                 System.out.println("Update operation is successful: " + success);
                 break;
             }
             case deleteMethodName: {
-                boolean success = cityWebService.deleteCity("");
+                checkParamsLength(args, 2);
+                boolean success = cityWebService.deleteCity(args[1]);
                 System.out.println("Delete operation is successful: " + success);
                 break;
             }
@@ -50,6 +54,14 @@ public class WebServiceClient {
                 System.exit(1);
                 break;
             }
+        }
+    }
+
+    private static void checkParamsLength(String[] args, int length) {
+        if (args.length < length) {
+            String message = String.format("Wrong number of parameters, got: %d, expected: %d", args.length, length);
+            System.err.println(message);
+            System.exit(1);
         }
     }
 
