@@ -1,5 +1,6 @@
 package ifmo.artslob.webservices.lab3.client;
 
+import com.sun.xml.internal.ws.fault.ServerSOAPFaultException;
 import ifmo.artslob.webservices.lab3.client.generated.City;
 import ifmo.artslob.webservices.lab3.client.generated.CityService;
 import ifmo.artslob.webservices.lab3.client.generated.CityWebService;
@@ -15,6 +16,14 @@ public class WebServiceClient {
     private final static String deleteMethodName = "delete";
 
     public static void main(String[] args) throws MalformedURLException {
+        try {
+            _main(args);
+        } catch (ServerSOAPFaultException e) {
+            System.err.println("Server answered with error: " + e.getFault().getFaultString());
+        }
+    }
+
+    private static void _main(String[] args) throws MalformedURLException {
         String method = (args.length > 0) ? args[0] : "default";
 
         URL url = new URL("http://localhost:8080/CityService?wsdl");
