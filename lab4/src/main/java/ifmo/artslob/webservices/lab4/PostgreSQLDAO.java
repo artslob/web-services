@@ -12,6 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class PostgreSQLDAO {
+    private Connection connection;
     private DbTable table;
     private DbColumn id_column;
     private DbColumn name_column;
@@ -20,7 +21,8 @@ public class PostgreSQLDAO {
     private DbColumn population_column;
     private DbColumn area_column;
 
-    PostgreSQLDAO() {
+    public PostgreSQLDAO(Connection connection) {
+        this.connection = connection;
         this.table = new DbSpec().addDefaultSchema().addTable("\"ifmo-ws.cities\"");
         this.id_column = table.addColumn("id", Types.INTEGER, null);
         this.name_column = table.addColumn("name", Types.VARCHAR, 200);
@@ -37,7 +39,7 @@ public class PostgreSQLDAO {
             String population,
             String area
     ) {
-        try (Connection connection = ConnectionUtil.getConnection()) {
+        try {
             Statement stmt = connection.createStatement();
             String query = createInsertQuery(name, country, founded, population, area);
             logSqlQuery(query);
@@ -60,7 +62,7 @@ public class PostgreSQLDAO {
             String area
     ) {
         List<City> cities = new ArrayList<>();
-        try (Connection connection = ConnectionUtil.getConnection()) {
+        try {
             String query = createSelectQuery(name, country, founded, population, area);
             logSqlQuery(query);
             ResultSet rs = connection.createStatement().executeQuery(query);
@@ -88,7 +90,7 @@ public class PostgreSQLDAO {
             String population,
             String area
     ) {
-        try (Connection connection = ConnectionUtil.getConnection()) {
+        try {
             Statement stmt = connection.createStatement();
             String query = createUpdateQuery(id, name, country, founded, population, area);
             logSqlQuery(query);
@@ -101,7 +103,7 @@ public class PostgreSQLDAO {
     }
 
     boolean deleteCity(String id) {
-        try (Connection connection = ConnectionUtil.getConnection()) {
+        try {
             Statement stmt = connection.createStatement();
             String query = createDeleteQuery(id);
             logSqlQuery(query);

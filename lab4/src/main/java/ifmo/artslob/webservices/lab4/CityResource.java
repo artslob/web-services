@@ -18,6 +18,6 @@ public class CityResource {
             @QueryParam("population") String population,
             @QueryParam("area") String area
     ) {
-        return new PostgreSQLDAO().getCities(name, country, founded, population, area);
+        return new PostgreSQLDAO(ConnectionUtil.getConnection()).getCities(name, country, founded, population, area);
     }
 }
