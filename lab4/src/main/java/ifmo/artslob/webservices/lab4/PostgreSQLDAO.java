@@ -54,7 +54,7 @@ public class PostgreSQLDAO {
         return -1;
     }
 
-    List<City> getCities(
+    public List<City> getCities(
             String name,
             String country,
             String founded,
