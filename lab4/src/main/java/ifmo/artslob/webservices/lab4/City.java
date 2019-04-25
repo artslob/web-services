@@ -23,13 +23,8 @@ public class City {
 
     @Override
     public String toString() {
-        return "City{" +
-                "name='" + name + '\'' +
-                ", country='" + country + '\'' +
-                ", founded=" + founded +
-                ", population=" + population +
-                ", area=" + area +
-                '}';
+        return String.format("City{name='%s', country='%s', founded=%d, population=%d, area=%d}",
+                name, country, founded, population, area);
     }
 
     public String getName() {
