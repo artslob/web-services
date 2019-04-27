@@ -29,4 +29,18 @@ public class CityResource {
     ) {
         return new PostgreSQLDAO(ConnectionUtil.getConnection()).getCities(name, country, founded, population, area);
     }
+
+    @PUT
+    @Path("/{id}")
+    public String updateCity(
+            @PathParam("id") String id,
+            @FormParam("name") String name,
+            @FormParam("country") String country,
+            @FormParam("founded") String founded,
+            @FormParam("population") String population,
+            @FormParam("area") String area
+    ) {
+        boolean result = new PostgreSQLDAO(ConnectionUtil.getConnection()).updateCity(id, name, country, founded, population, area);
+        return Boolean.toString(result);
+    }
 }
