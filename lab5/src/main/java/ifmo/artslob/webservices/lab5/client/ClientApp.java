@@ -51,6 +51,12 @@ public class ClientApp {
                 System.out.println("Update operation is successful: " + success);
                 break;
             }
+            case deleteMethodName: {
+                checkParamsLength(args, 2);
+                String success = deleteCity(client, args[1]);
+                System.out.println("Delete operation is successful: " + success);
+                break;
+            }
             default: {
                 System.err.println("Program requires first cli argument to be name of one CRUD method: " +
                         createMethodName + ", " + readMethodName + ", " + updateMethodName + " or " + deleteMethodName);
@@ -138,6 +144,19 @@ public class ClientApp {
         ClientResponse response = webResource
                 .type(MediaType.APPLICATION_FORM_URLENCODED_TYPE)
                 .put(ClientResponse.class, formData);
+        if (response.getStatus() != ClientResponse.Status.OK.getStatusCode()) {
+            throw new IllegalStateException("Request failed");
+        }
+        GenericType<String> type = new GenericType<String>() {
+        };
+        return response.getEntity(type);
+    }
+
+    private static String deleteCity(Client client, String id) {
+        WebResource webResource = client.resource(URL + "/" + id.trim());
+        ClientResponse response = webResource
+                .type(MediaType.APPLICATION_FORM_URLENCODED_TYPE)
+                .delete(ClientResponse.class);
         if (response.getStatus() != ClientResponse.Status.OK.getStatusCode()) {
             throw new IllegalStateException("Request failed");
         }
