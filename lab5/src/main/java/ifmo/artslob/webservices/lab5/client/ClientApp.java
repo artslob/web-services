@@ -45,6 +45,12 @@ public class ClientApp {
                 System.out.println("Total cities: " + cities.size());
                 break;
             }
+            case updateMethodName: {
+                checkParamsLength(args, 7);
+                String success = updateCity(client, args[1], args[2], args[3], args[4], args[5], args[6]);
+                System.out.println("Update operation is successful: " + success);
+                break;
+            }
             default: {
                 System.err.println("Program requires first cli argument to be name of one CRUD method: " +
                         createMethodName + ", " + readMethodName + ", " + updateMethodName + " or " + deleteMethodName);
@@ -109,6 +115,33 @@ public class ClientApp {
             throw new IllegalStateException("Request failed");
         }
         GenericType<List<City>> type = new GenericType<List<City>>() {
+        };
+        return response.getEntity(type);
+    }
+
+    private static String updateCity(
+            Client client,
+            String id,
+            String name,
+            String country,
+            String founded,
+            String population,
+            String area
+    ) {
+        WebResource webResource = client.resource(URL + "/" + id.trim());
+        MultivaluedMap<String, String> formData = new MultivaluedMapImpl();
+        formData.add("name", name);
+        formData.add("country", country);
+        formData.add("founded", founded);
+        formData.add("population", population);
+        formData.add("area", area);
+        ClientResponse response = webResource
+                .type(MediaType.APPLICATION_FORM_URLENCODED_TYPE)
+                .put(ClientResponse.class, formData);
+        if (response.getStatus() != ClientResponse.Status.OK.getStatusCode()) {
+            throw new IllegalStateException("Request failed");
+        }
+        GenericType<String> type = new GenericType<String>() {
         };
         return response.getEntity(type);
     }
