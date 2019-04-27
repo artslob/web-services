@@ -15,7 +15,7 @@ public class CityResource {
             @FormParam("population") String population,
             @FormParam("area") String area
     ) {
-        int result = new PostgreSQLDAO(ConnectionUtil.getConnection()).createCity(name, country, founded, population, area);
+        int result = newDAO().createCity(name, country, founded, population, area);
         return Integer.toString(result);
     }
 
@@ -27,7 +27,7 @@ public class CityResource {
             @QueryParam("population") String population,
             @QueryParam("area") String area
     ) {
-        return new PostgreSQLDAO(ConnectionUtil.getConnection()).getCities(name, country, founded, population, area);
+        return newDAO().getCities(name, country, founded, population, area);
     }
 
     @PUT
@@ -40,7 +40,7 @@ public class CityResource {
             @FormParam("population") String population,
             @FormParam("area") String area
     ) {
-        boolean result = new PostgreSQLDAO(ConnectionUtil.getConnection()).updateCity(id, name, country, founded, population, area);
+        boolean result = newDAO().updateCity(id, name, country, founded, population, area);
         return Boolean.toString(result);
     }
 
@@ -49,5 +49,9 @@ public class CityResource {
     public String deleteCity(@PathParam("id") String id) {
         boolean result = new PostgreSQLDAO(ConnectionUtil.getConnection()).deleteCity(id);
         return Boolean.toString(result);
+    }
+
+    private PostgreSQLDAO newDAO() {
+        return new PostgreSQLDAO(ConnectionUtil.getConnection());
     }
 }
