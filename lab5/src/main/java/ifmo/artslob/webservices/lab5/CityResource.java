@@ -43,4 +43,11 @@ public class CityResource {
         boolean result = new PostgreSQLDAO(ConnectionUtil.getConnection()).updateCity(id, name, country, founded, population, area);
         return Boolean.toString(result);
     }
+
+    @DELETE
+    @Path("/{id}")
+    public String deleteCity(@PathParam("id") String id) {
+        boolean result = new PostgreSQLDAO(ConnectionUtil.getConnection()).deleteCity(id);
+        return Boolean.toString(result);
+    }
 }
