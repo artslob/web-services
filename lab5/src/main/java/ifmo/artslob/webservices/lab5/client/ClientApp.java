@@ -75,12 +75,7 @@ public class ClientApp {
             String area
     ) {
         WebResource webResource = client.resource(URL);
-        MultivaluedMap<String, String> formData = new MultivaluedMapImpl();
-        formData.add("name", name);
-        formData.add("country", country);
-        formData.add("founded", founded);
-        formData.add("population", population);
-        formData.add("area", area);
+        MultivaluedMap<String, String> formData = cityFormData(name, country, founded, population, area);
         ClientResponse response = webResource
                 .type(MediaType.APPLICATION_FORM_URLENCODED_TYPE)
                 .post(ClientResponse.class, formData);
@@ -135,12 +130,7 @@ public class ClientApp {
             String area
     ) {
         WebResource webResource = client.resource(URL + "/" + id.trim());
-        MultivaluedMap<String, String> formData = new MultivaluedMapImpl();
-        formData.add("name", name);
-        formData.add("country", country);
-        formData.add("founded", founded);
-        formData.add("population", population);
-        formData.add("area", area);
+        MultivaluedMap<String, String> formData = cityFormData(name, country, founded, population, area);
         ClientResponse response = webResource
                 .type(MediaType.APPLICATION_FORM_URLENCODED_TYPE)
                 .put(ClientResponse.class, formData);
@@ -163,6 +153,22 @@ public class ClientApp {
         GenericType<String> type = new GenericType<String>() {
         };
         return response.getEntity(type);
+    }
+
+    private static MultivaluedMap<String, String> cityFormData(
+            String name,
+            String country,
+            String founded,
+            String population,
+            String area
+    ) {
+        MultivaluedMap<String, String> formData = new MultivaluedMapImpl();
+        formData.add("name", name);
+        formData.add("country", country);
+        formData.add("founded", founded);
+        formData.add("population", population);
+        formData.add("area", area);
+        return formData;
     }
 
     private static void checkParamsLength(String[] args, int length) {
