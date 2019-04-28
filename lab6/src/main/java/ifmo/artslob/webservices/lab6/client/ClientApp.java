@@ -79,12 +79,7 @@ public class ClientApp {
         ClientResponse response = webResource
                 .type(MediaType.APPLICATION_FORM_URLENCODED_TYPE)
                 .post(ClientResponse.class, formData);
-        if (response.getStatus() != ClientResponse.Status.OK.getStatusCode()) {
-            throw new IllegalStateException("Request failed");
-        }
-        GenericType<String> type = new GenericType<String>() {
-        };
-        return response.getEntity(type);
+        return checkResponse(response);
     }
 
     private static List<City> getCities(
@@ -134,12 +129,7 @@ public class ClientApp {
         ClientResponse response = webResource
                 .type(MediaType.APPLICATION_FORM_URLENCODED_TYPE)
                 .put(ClientResponse.class, formData);
-        if (response.getStatus() != ClientResponse.Status.OK.getStatusCode()) {
-            throw new IllegalStateException("Request failed");
-        }
-        GenericType<String> type = new GenericType<String>() {
-        };
-        return response.getEntity(type);
+        return checkResponse(response);
     }
 
     private static String deleteCity(Client client, String id) {
@@ -147,12 +137,18 @@ public class ClientApp {
         ClientResponse response = webResource
                 .type(MediaType.APPLICATION_FORM_URLENCODED_TYPE)
                 .delete(ClientResponse.class);
+        return checkResponse(response);
+    }
+
+    private static String checkResponse(ClientResponse response) {
         if (response.getStatus() != ClientResponse.Status.OK.getStatusCode()) {
-            throw new IllegalStateException("Request failed");
+            String error_message = response.getEntity(new GenericType<>(String.class));
+            if (error_message.trim().isEmpty()) {
+                error_message = "Request failed";
+            }
+            throw new IllegalStateException(error_message);
         }
-        GenericType<String> type = new GenericType<String>() {
-        };
-        return response.getEntity(type);
+        return response.getEntity(new GenericType<>(String.class));
     }
 
     private static MultivaluedMap<String, String> cityFormData(
