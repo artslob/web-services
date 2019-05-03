@@ -14,7 +14,8 @@ public class App {
                 break;
             }
             case browseMethodName: {
-                checkParamsLength(args, 42);
+                checkParamsLength(args, 1);
+                new Browser().Browse();
                 break;
             }
             default: {
